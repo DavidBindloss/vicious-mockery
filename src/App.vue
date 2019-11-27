@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>{{ insult }}</p>
+    <button @click.prevent="generate">Insult me again!</button>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import data from "./assets/data.json";
+
+let getPart = (section) => {
+  let arr = data[`part_${section}`];
+  return arr[Math.floor((Math.random()*arr.length))];
+}
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  created() {
+    this.generate();
+  },
+  methods: {
+    generate() {
+      this.insult = `Thou ${getPart('one')} ${getPart('two')} ${getPart('three')}!`;
+    }
+  },
+  data() {
+    return {
+      insult: ''
+    }
   }
 }
 </script>
@@ -23,6 +39,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
