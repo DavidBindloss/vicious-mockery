@@ -1,5 +1,4 @@
-{
-  "part_one": [
+[
     "artless",
     "bawdy",
     "beslubbering",
@@ -49,9 +48,7 @@
     "warped",
     "wayward",
     "weedy",
-    "yeasty"
-  ],
-  "part_two": [
+    "yeasty", 
     "base-court",
     "bat-fowling",
     "beef-witted",
@@ -101,9 +98,7 @@
     "tickle-brained",
     "toad-spotted",
     "unchin-snouted",
-    "weather-bitten"
-  ],
-  "part_three": [
+    "weather-bitten",
     "apple-john",
     "baggage",
     "barnacle",
@@ -154,5 +149,4 @@
     "vassal",
     "whey-face",
     "wagtail"
-  ]
-}
+]
