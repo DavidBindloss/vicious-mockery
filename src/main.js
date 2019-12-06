@@ -1,26 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
-
+import Clipboard from 'v-clipboard'
 import VueRouter from 'vue-router'
-import "./assets/style.scss"
 
-import SocialSharing from "vue-social-sharing";
+import "./assets/style.scss"
  
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
-import { faShareAlt, faRedo } from "@fortawesome/free-solid-svg-icons"
+import { faRedo, faShareAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faGithub);
-library.add(faShareAlt);
-library.add(faRedo);
+library.add(faRedo, faShareAlt);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
 Vue.use(VueRouter);
-Vue.use(SocialSharing);
+Vue.use(Clipboard);
 
 let routes = [
    { path: '/', component: App, name: 'home'}
