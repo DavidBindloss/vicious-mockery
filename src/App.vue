@@ -3,23 +3,18 @@
     <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
     <div id="app" class="space">
       <p
-        @click.prevent="copyTextToClipboard"
+        @click.prevent="copyToClipboard('insult')"
         data-tooltip="Click to copy this insult"
         class="insult has-tooltip-right"
       >{{ insult }}</p>
-      
-      <IconButton
-        icon="redo"
-        button-style="info"
-        text="Again"
-        @click="generateInsult(null)"
-      />
+
+      <IconButton icon="redo" button-style="info" text="Again" @click="generateInsult(null)" />
 
       <IconButton
         icon="share-alt"
         button-style="primary"
         text="Share Link"
-        @click="copyLinkToClipboard"
+        @click="copyToClipboard('link')"
       />
     </div>
   </div>
@@ -39,14 +34,13 @@ export default {
   },
   methods: {
     ...mapActions(["generateInsult"]),
-    copyLinkToClipboard() {
-      this.$clipboard(`${window.location.href}?id=${this.ids.join("")}`);
-      this.message = "Copied link to clipboard!";
-      this.showNotification();
-    },
-    copyTextToClipboard() {
-      this.$clipboard(this.insult);
-      this.message = "Copied insult to clipboard!";
+    copyToClipboard(type) {
+      this.$clipboard(
+        type === "link"
+          ? `${window.location.href}?id=${this.ids.join("")}`
+          : this.insult
+      );
+      this.message = `Copied ${type} to clipboard.`;
       this.showNotification();
     },
     showNotification() {
