@@ -1,79 +1,56 @@
 <template>
   <div class="container">
-    <p :class="{ invisible: !notify }" class="has-text-primary">
-      Link copied to clipboard!
-    </p>
-    <div id="app" class="space">
-      <p class="insult">{{ insult }}</p>
-      <button class="button is-info is-rounded" @click.prevent=generate>
+    <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
+    <div id="app" class="space" >
+      <p @click.prevent="copyTextToClipboard" data-tooltip="Click to copy this insult" class="insult has-tooltip-right">{{ insult }}</p>
+      <button class="button is-info is-rounded" @click.prevent=generateInsult(null)>
         <span class="icon">
           <font-awesome-icon :icon="['fas', 'redo']" />
         </span>
         <span>Again</span>
       </button>
-      <button class="button is-primary is-rounded" @click.prevent=copyToClipboard>
+      <button class="button is-primary is-rounded" @click.prevent=copyLinkToClipboard>
         <span class="icon">
           <font-awesome-icon :icon="['fas', 'share-alt']" />
         </span>
-        <span>Share</span>
+        <span>Share Link</span>
       </button>
-      <!-- <p>{{ ids }}</p> -->
     </div>
   </div>
 </template>
 
 <script>
-import data from "./assets/data.json";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "app",
-  created() {
-    this.generate();
+  computed: {
+    ...mapState(["data", "insult", "ids"])
   },
   methods: {
-    getRIndex() {
-      return Math.floor(Math.random() * 49);
-    },
-    getIdx(f, p = 0) {
-      return parseInt(
-        f
-          .split("")
-          .splice(p, 2)
-          .join("")
-      );
-    },
-    copyToClipboard() {
+    ...mapActions(["generateInsult"]),
+    copyLinkToClipboard() {
       this.$clipboard(`${window.location.href}?id=${this.ids.join("")}`);
+      this.message = "Copied link to clipboard!";
+      this.showNotification();
+    },
+    copyTextToClipboard() {
+      this.$clipboard(this.insult);
+      this.message = "Copied insult to clipboard!";
+      this.showNotification();
+    },
+    showNotification() {
       this.notify = true;
       window.setTimeout(() => {
         this.notify = false;
-      }, 4000)
-    },
-    generate() {
-      // Is there a querystring?
-      let query = this.$route.query.id;
-      // let one, two, three;
-      let indices;
-      if (query && query.length === 6) {
-        indices = Array.from(Array(3)).map(
-          (x, i) => this.getIdx(query, i * 2) + 50 * i
-        );
-      } else {
-        indices = Array.from(Array(3)).map((x, i) => this.getRIndex() + 50 * i);
-      }
-
-      let [one, two, three] = indices.map(x => data[x]);
-      this.insult = `Thou ${one} ${two} ${three}!`;
-      this.ids = indices.map((x, i) => `00${x - 50 * i}`.slice(-2));
-
-      if (this.$route.query.id) this.$router.replace("/");
+      }, 4000);
     }
   },
+
   data() {
     return {
-      insult: "",
-      ids: [],
-      notify: false
+      notify: false,
+      message: ""
     };
   }
 };
@@ -95,11 +72,11 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 15px;
+  min-height: 28px;
   &.invisible {
     opacity: 0;
   }
 }
-
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -117,6 +94,7 @@ body {
   height: 100%;
 
   .space {
+
     button:first-of-type {
       margin-right: 15px;
     }

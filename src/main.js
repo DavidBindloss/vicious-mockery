@@ -4,7 +4,9 @@ import Clipboard from 'v-clipboard'
 import VueRouter from 'vue-router'
 
 import "./assets/style.scss"
- 
+
+ import store from "./store"
+
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faRedo, faShareAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -27,6 +29,12 @@ const router = new VueRouter({
 })
 
 new Vue({
+  store,
   router,
   render: h => h(App),
+  created() {
+    let query = this.$route.query.id || undefined;
+    this.$store.dispatch("generateInsult", query);
+    if (this.$route.query.id) this.$router.replace("/");
+  }
 }).$mount('#app')
