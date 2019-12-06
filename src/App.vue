@@ -1,29 +1,39 @@
 <template>
   <div class="container">
     <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
-    <div id="app" class="space" >
-      <p @click.prevent="copyTextToClipboard" data-tooltip="Click to copy this insult" class="insult has-tooltip-right">{{ insult }}</p>
-      <button class="button is-info is-rounded" @click.prevent=generateInsult(null)>
-        <span class="icon">
-          <font-awesome-icon :icon="['fas', 'redo']" />
-        </span>
-        <span>Again</span>
-      </button>
-      <button class="button is-primary is-rounded" @click.prevent=copyLinkToClipboard>
-        <span class="icon">
-          <font-awesome-icon :icon="['fas', 'share-alt']" />
-        </span>
-        <span>Share Link</span>
-      </button>
+    <div id="app" class="space">
+      <p
+        @click.prevent="copyTextToClipboard"
+        data-tooltip="Click to copy this insult"
+        class="insult has-tooltip-right"
+      >{{ insult }}</p>
+      
+      <IconButton
+        icon="redo"
+        button-style="info"
+        text="Again"
+        @click="generateInsult(null)"
+      />
+
+      <IconButton
+        icon="share-alt"
+        button-style="primary"
+        text="Share Link"
+        @click="copyLinkToClipboard"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import IconButton from "./components/IconButton";
 
 export default {
   name: "app",
+  components: {
+    IconButton
+  },
   computed: {
     ...mapState(["data", "insult", "ids"])
   },
@@ -46,7 +56,6 @@ export default {
       }, 4000);
     }
   },
-
   data() {
     return {
       notify: false,
@@ -94,7 +103,6 @@ body {
   height: 100%;
 
   .space {
-
     button:first-of-type {
       margin-right: 15px;
     }
@@ -103,23 +111,6 @@ body {
       font-weight: bold;
       font-size: 1.6rem;
       margin-bottom: 15px;
-    }
-  }
-
-  .icons {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    a {
-      color: #5e5e5e;
-      transition: color 0.3s ease;
-      margin-right: 15px;
-      &:hover {
-        color: #363636;
-      }
-      i {
-        font-size: 2rem;
-      }
     }
   }
 }

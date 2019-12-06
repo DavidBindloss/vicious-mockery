@@ -41,7 +41,6 @@ export default new Vuex.Store({
         indices = indices.map((_x, i) => getRIndex(i));
       }
 
-
       commit("setInsult", `Thou ${indices.map(x => state.data[x]).join(" ")}!`);
       commit(
         "setIds",
