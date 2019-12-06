@@ -64,7 +64,7 @@ export default {
 
       let [one, two, three] = indices.map(x => data[x]);
       this.insult = `Thou ${one} ${two} ${three}!`;
-      this.ids = indices.map((x, i) => x - 50 * i);
+      this.ids = indices.map((x, i) => `00${x - 50 * i}`.slice(-2));
 
       if (this.$route.query.id) this.$router.replace("/");
     }
