@@ -4,8 +4,6 @@
     <div id="app" class="space">
       <p
         @click.prevent="copyToClipboard('insult')"
-        data-tooltip="Click to copy this insult"
-        class="insult has-tooltip-right"
       >{{ insult }}</p>
 
       <IconButton icon="redo" button-style="info" text="Again" @click="generateInsult(null)" />
