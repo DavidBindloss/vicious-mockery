@@ -2,7 +2,7 @@
   <div class="container">
     <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
     <div id="app" class="space">
-      <p
+      <p class="insult"
         @click.prevent="copyToClipboard('insult')"
       >{{ insult }}</p>
 
