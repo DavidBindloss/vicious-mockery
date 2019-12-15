@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container is-fluid">
     <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
     <div id="app" class="space">
       <p class="insult"
@@ -15,6 +15,7 @@
         @click="copyToClipboard('link')"
       />
     </div>
+    <img id="logo" width="400" src="@/assets/logo.png" alt="">
   </div>
 </template>
 
@@ -58,6 +59,15 @@ export default {
 </script>
 
 <style lang="scss">
+
+#logo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0.3;
+}
+
 body,
 html {
   height: 100%;
