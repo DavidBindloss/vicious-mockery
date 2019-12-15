@@ -8,10 +8,10 @@ import "./assets/style.scss"
  import store from "./store"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faRedo, faShareAlt } from "@fortawesome/free-solid-svg-icons"
+import { faRedo, faShareAlt, faMoneyCheckAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faRedo, faShareAlt);
+library.add(faRedo, faShareAlt, faMoneyCheckAlt);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

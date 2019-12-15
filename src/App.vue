@@ -2,31 +2,34 @@
   <div class="container is-fluid">
     <p :class="{ invisible: !notify }" class="has-text-primary">{{ message }}</p>
     <div id="app" class="space">
-      <p class="insult"
-        @click.prevent="copyToClipboard('insult')"
-      >{{ insult }}</p>
+      <p class="insult" @click.prevent="copyToClipboard('insult')">{{ insult }}</p>
+      <div class="buttons">
+        <IconButton icon="redo" button-style="info" text="Again" @click="generateInsult(null)" />
+        <IconButton
+          icon="share-alt"
+          button-style="primary"
+          text="Share Link"
+          @click="copyToClipboard('link')"
+        />
+         <Checkout :insult=insult />
 
-      <IconButton icon="redo" button-style="info" text="Again" @click="generateInsult(null)" />
-
-      <IconButton
-        icon="share-alt"
-        button-style="primary"
-        text="Share Link"
-        @click="copyToClipboard('link')"
-      />
+      </div>
     </div>
-    <img id="logo" width="400" src="@/assets/logo.png" alt="">
+    <img id="logo" width="400" src="@/assets/logo.png" alt />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+
 import IconButton from "./components/IconButton";
+import Checkout from "./components/Checkout"
 
 export default {
   name: "app",
   components: {
-    IconButton
+    IconButton,
+    Checkout
   },
   computed: {
     ...mapState(["data", "insult", "ids"])
@@ -49,17 +52,30 @@ export default {
       }, 4000);
     }
   },
-  data() {
-    return {
-      notify: false,
-      message: ""
-    };
-  }
+  data: () => ({
+    notify: false,
+    message: "",
+    stripe: {
+      publishableKey: process.env.PUBLISHABLE_KEY,
+      loading: false,
+      line_items: [
+        {
+          sku: 'sku_GMoe5KiSpvVpYw',
+          quantity: 2,
+      
+        }
+      ],
+      successUrl: "your-success-url",
+      cancelUrl: "your-cancel-url"
+    }
+  })
 };
 </script>
 
 <style lang="scss">
-
+.buttons {
+  justify-content: center !important;
+}
 #logo {
   position: absolute;
   bottom: 0;
